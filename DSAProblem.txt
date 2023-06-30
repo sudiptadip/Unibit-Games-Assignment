@@ -1,0 +1,32 @@
+function findCombinations(nums, target) {
+  let complements = {};
+  let firstCombination = [];
+
+  for (let i = 0; i < nums.length; i++) {
+    let num = nums[i];
+    let comp = target - num;
+    if (complements.hasOwnProperty(comp)) {
+      firstCombination.push([num, comp]);
+    }
+    complements[num] = i;
+  }
+
+  let mergedArray = [].concat(...firstCombination).sort((a, b) => a - b);
+  let secondCombination = [];
+
+  target *= 2;
+  for (let num of mergedArray) {
+    let comp = target - num;
+    secondCombination.push([num].concat(Array(target - 1).fill(comp)));
+  }
+
+  return [firstCombination, secondCombination];
+}
+
+let nums = [1, 3, 2, 2, -4, -6, -2, 8];
+let target = 4;
+
+let combinations = findCombinations(nums, target);
+console.log("First Combination For", target, ":", combinations[0]);
+console.log("Merge Into a single Array:", mergedArray);
+console.log("Second Combination For", target * 2, ":", combinations[1]);
